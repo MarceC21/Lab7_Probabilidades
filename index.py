@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# =========================================================
-# PARÁMETROS GENERALES
-# =========================================================
+# Párametros de la simualción
 
 np.random.seed(2026)
 
@@ -11,12 +9,11 @@ N = 100      # número total de estampas
 S = 7        # estampas por sobre
 R = 10000    # simulaciones
 
-# =========================================================
-# FUNCIÓN DE SIMULACIÓN
-# =========================================================
+# función para simular la compra de sobres hasta completar el álbum
 
 def simular_album(N, S):
     
+    # set para las estampas que ya tenemos
     coleccion = set()
     
     sobres = 0
@@ -55,9 +52,7 @@ for _ in range(R):
 lista_sobres = np.array(lista_sobres)
 lista_repetidas = np.array(lista_repetidas)
 
-# =========================================================
-# RESULTADOS
-# =========================================================
+# Resultados etapa1 
 
 media_sobres = np.mean(lista_sobres)
 std_sobres = np.std(lista_sobres)
@@ -76,9 +71,7 @@ print(f"Desviación estándar repetidas: {std_repetidas:.4f}")
 print()
 print(f"Probabilidad de necesitar más de 30 sobres: {prob_mas_30:.4f}")
 
-# =========================================================
-# VALOR TEÓRICO
-# =========================================================
+# Valor teórico esperado
 
 H_N = np.sum(1 / np.arange(1, N + 1))
 
@@ -89,17 +82,13 @@ print("===== TEORÍA DEL COLECCIONISTA =====")
 print(f"H_{N} = {H_N:.4f}")
 print(f"Valor teórico esperado: {valor_teorico:.4f}")
 
-# =========================================================
-# MÍNIMO TEÓRICO
-# =========================================================
+# Mínimo teórico de sobres (redondeado hacia arriba)
 
 minimo_teorico = np.ceil(N / S)
 
 print(f"Mínimo teórico de sobres: {minimo_teorico}")
 
-# =========================================================
-# ¿APARECE EL MÍNIMO?
-# =========================================================
+# Si aparece el mínimo teórico en las simulaciones
 
 casos_minimos = np.sum(lista_sobres == minimo_teorico)
 
@@ -115,11 +104,13 @@ plt.hist(lista_sobres, bins=30)
 
 plt.axvline(media_sobres,
             linestyle='dashed',
+            color='red',        
             linewidth=2,
             label=f"Media = {media_sobres:.2f}")
 
 plt.axvline(valor_teorico,
             linestyle='solid',
+            color='green',
             linewidth=2,
             label=f"Teórico = {valor_teorico:.2f}")
 
@@ -135,6 +126,7 @@ plt.show()
 # ETAPA 2
 # =========================================================
 
+# Simular la compra de M sobres y calcular la probabilidad de completar el álbum
 M_values = [20,25,30,35,40,45,50,60,70,80]
 
 probabilidades = []
